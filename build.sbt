@@ -1,7 +1,7 @@
 lazy val commonSettings = Def.settings(
   scalaVersion := "2.11.8",
   organization := "com.github.nadavwr",
-  version := "0.1-SNAPSHOT"
+  version := "0.1.0"
 )
 
 lazy val unpublished = Def.settings(
