@@ -1,7 +1,7 @@
 lazy val commonSettings = Def.settings(
   scalaVersion := "2.11.8",
   organization := "com.github.nadavwr",
-  version := "0.2.0-SNAPSHOT"
+  version := "0.2.0"
 )
 
 lazy val unpublished = Def.settings(
@@ -14,8 +14,7 @@ lazy val ffi = project
   .enablePlugins(ScalaNativePlugin)
   .settings(
     commonSettings,
-    nativeSharedLibrary := true,
-    libraryDependencies += "com.github.nadavwr" %%% "mempool" % "0.2.0-SNAPSHOT"
+    nativeSharedLibrary := true
   )
 
 lazy val sample = project
