@@ -1,8 +1,9 @@
 lazy val commonSettings = Def.settings(
   scalaVersion := "2.11.8",
   organization := "com.github.nadavwr",
-  version := "0.3.0-SNAPSHOT",
-  publishArtifact in (Compile, packageDoc) := false
+  version := "0.3.0",
+  publishArtifact in (Compile, packageDoc) := false,
+  licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 )
 
 lazy val unpublished = Def.settings(
