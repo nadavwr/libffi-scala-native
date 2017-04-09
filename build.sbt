@@ -1,7 +1,8 @@
 lazy val commonSettings = Def.settings(
   scalaVersion := "2.11.8",
   organization := "com.github.nadavwr",
-  version := "0.3.0-SNAPSHOT"
+  version := "0.3.0-SNAPSHOT",
+  publishArtifact in (Compile, packageDoc) := false
 )
 
 lazy val unpublished = Def.settings(
@@ -10,7 +11,7 @@ lazy val unpublished = Def.settings(
   publishM2 := {}
 )
 
-lazy val ffi = project
+lazy val `libffi-scala-native` = project
   .enablePlugins(ScalaNativePlugin)
   .settings(
     commonSettings,
@@ -23,12 +24,13 @@ lazy val sample = project
     commonSettings,
     unpublished
   )
-  .dependsOn(ffi)
+  .dependsOn(`libffi-scala-native`)
 
-lazy val ffiRoot = (project in file("."))
-  .aggregate(ffi, sample)
+lazy val `libffi-scala-native-root` = (project in file("."))
+  .aggregate(`libffi-scala-native`, sample)
   .settings(
     commonSettings,
     unpublished,
     run := { (run in sample).evaluated }
   )
+
