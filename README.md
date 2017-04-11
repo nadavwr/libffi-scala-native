@@ -66,7 +66,7 @@ assert(result.rem == 2)
 val result2 = div(num, denom)(stackalloc[DivT])
 ```
 
-##Limitations
+## Limitations
 
 * The return value and all arguments must be preallocated, and 
 provided to bound functions as pointers.
