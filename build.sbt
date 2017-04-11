@@ -32,6 +32,7 @@ lazy val `libffi-scala-native-root` = (project in file("."))
   .settings(
     commonSettings,
     unpublished,
-    run := { (run in sample).evaluated }
+    run := { (run in sample).evaluated },
+    publish := { (publish in `libffi-scala-native`).value }
   )
 
