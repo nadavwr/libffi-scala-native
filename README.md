@@ -1,4 +1,4 @@
-#`libffi` Bindings for Scala Native
+# `libffi` Bindings for Scala Native
 
 Scala Native's C foreign function interface, while very simple to use,
 still lacks a few key features. This library provides an alternative to
