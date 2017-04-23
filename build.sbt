@@ -1,7 +1,7 @@
 lazy val commonSettings = Def.settings(
   scalaVersion := "2.11.8",
   organization := "com.github.nadavwr",
-  version := "0.3.0",
+  version := "0.3.1",
   publishArtifact in (Compile, packageDoc) := false,
   licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 )
@@ -14,10 +14,7 @@ lazy val unpublished = Def.settings(
 
 lazy val `libffi-scala-native` = project
   .enablePlugins(ScalaNativePlugin)
-  .settings(
-    commonSettings,
-    nativeSharedLibrary := true
-  )
+  .settings(commonSettings)
 
 lazy val sample = project
   .enablePlugins(ScalaNativePlugin)
