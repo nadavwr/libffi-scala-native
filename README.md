@@ -17,7 +17,7 @@ this library is published, and add a `%%%` dependency:
 
 ```scala
 resolvers += Resolver.bintrayRepo("nadavwr", "maven"),
-libraryDependencies += "com.github.nadavwr" %%% "libffi-scala-native" % "0.3.0"
+libraryDependencies += "com.github.nadavwr" %%% "libffi-scala-native" % "0.3.1"
 ```
 
 Every parameter type must have an instance of `FfiType[_]`
@@ -70,9 +70,6 @@ val result2 = div(num, denom)(stackalloc[DivT])
 
 * The return value and all arguments must be preallocated, and 
 provided to bound functions as pointers.
-* Only functions with up to 5 parameters are supported at this time. This
-is not a technical limitation—just looking for a more elegant solution
-before going forward with some more boilerplate.
 * There is no facility to unload shared libraries once they've been loaded.
 * Expect a performance drop typical of `libffi`. 
 Depending on your needs, this may be negligible.
