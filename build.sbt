@@ -1,7 +1,6 @@
 lazy val commonSettings = Def.settings(
-  scalaVersion := "2.11.8",
+  scalaVersion := "2.11.11",
   organization := "com.github.nadavwr",
-  version := "0.3.3",
   publishArtifact in (Compile, packageDoc) := false,
   licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 )
@@ -16,20 +15,25 @@ lazy val `libffi-scala-native` = project
   .enablePlugins(ScalaNativePlugin)
   .settings(commonSettings)
 
-lazy val sample = project
+lazy val `libffi-scala-native-test` = project
   .enablePlugins(ScalaNativePlugin)
   .settings(
     commonSettings,
-    unpublished
+    unpublished,
+    resolvers += Resolver.bintrayRepo("nadavwr", "maven"),
+    libraryDependencies += "com.github.nadavwr" %%% "makeshift" % "0.1.3",
+    test := run.toTask("").value
   )
   .dependsOn(`libffi-scala-native`)
 
 lazy val `libffi-scala-native-root` = (project in file("."))
-  .aggregate(`libffi-scala-native`, sample)
+  .aggregate(`libffi-scala-native`, `libffi-scala-native-test`)
   .settings(
     commonSettings,
     unpublished,
-    run := { (run in sample).evaluated },
-    publish := { (publish in `libffi-scala-native`).value }
+    test := { (test in `libffi-scala-native-test`).value },
+    publish := { (publish in `libffi-scala-native`).value },
+    publishLocal := { (publishLocal in `libffi-scala-native`).value },
+    clean := { (clean in `libffi-scala-native`).value; (clean in `libffi-scala-native-test`).value }
   )
 

@@ -138,8 +138,16 @@ class Module(private val moduleHandle: Ptr[Byte]) {
 }
 
 object Module {
-  def open(path: String, mode: CInt = 0): Module = {
-    val ptr = dl.dlopen(toCString(path), mode)
+  val RTLD_LAZY     = 0x1
+  val RTLD_NOW      = 0x2
+  val RTLD_LOCAL    = 0x4
+  val RTLD_GLOBAL   = 0x8
+  val RTLD_NOLOAD   = 0x10
+  val RTLD_NODELETE = 0x80
+
+  def open(path: String = "", mode: CInt = 0): Module = {
+    val cstr = if (path.isEmpty) null else toCString(path)
+    val ptr = dl.dlopen(cstr, mode)
     assert(ptr != null, s"dlopen $path: ${dl.dlerror()}")
     new Module(ptr)
   }
