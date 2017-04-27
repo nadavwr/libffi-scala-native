@@ -17,7 +17,7 @@ this library is published, and add a `%%%` dependency:
 
 ```scala
 resolvers += Resolver.bintrayRepo("nadavwr", "maven"),
-libraryDependencies += "com.github.nadavwr" %%% "libffi-scala-native" % "0.3.2"
+libraryDependencies += "com.github.nadavwr" %%% "libffi-scala-native" % "0.3.3"
 ```
 
 Every parameter type must have an instance of `FfiType[_]`
