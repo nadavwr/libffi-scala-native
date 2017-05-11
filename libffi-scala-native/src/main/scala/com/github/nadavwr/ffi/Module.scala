@@ -145,7 +145,7 @@ object Module {
   val RTLD_NOLOAD   = 0x10
   val RTLD_NODELETE = 0x80
 
-  def open(path: String = "", mode: CInt = 0): Module = {
+  def open(path: String = "", mode: CInt = RTLD_LAZY): Module = {
     val cstr = if (path.isEmpty) null else toCString(path)
     val ptr = dl.dlopen(cstr, mode)
     assert(ptr != null, s"dlopen $path: ${dl.dlerror()}")
