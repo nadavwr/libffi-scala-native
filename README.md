@@ -1,4 +1,6 @@
 # `libffi` Bindings for Scala Native
+![circleci shield](https://circleci.com/gh/nadavwr/libffi-scala-native.png?style=shield&circle-token=05e7c0a5b707342701902277cfc15db0e8176c87)
+
 
 Scala Native's C foreign function interface, while very simple to use,
 still lacks a few key features. This library provides an alternative to
