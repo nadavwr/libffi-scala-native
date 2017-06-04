@@ -1,7 +1,6 @@
 package com.github.nadavwr.ffi
 
 import scala.scalanative.native._
-import scala.scalanative.runtime.GC
 
 class FfiCif(val symbol: String, returnType: FfiType[_], parameterTypes: FfiType[_]*) {
 
@@ -11,7 +10,7 @@ class FfiCif(val symbol: String, returnType: FfiType[_], parameterTypes: FfiType
   private[ffi] val cif: FfiCifPtr = {
     val nargs = parameterTypes.length
     val atypesSize: CInt = ((nargs+1) * sizeof[FfiTypePtr]).toInt
-    val allocated = GC.malloc(sizeof[FfiCifStruct] + atypesSize)
+    val allocated = stdlib.malloc(sizeof[FfiCifStruct] + atypesSize)
     val cif = allocated.cast[Ptr[FfiCifStruct]]
     val atypesPtr = (allocated + sizeof[FfiCifStruct]).cast[Ptr[FfiTypePtr]]
     var i = 0
@@ -45,4 +44,7 @@ class FfiCif(val symbol: String, returnType: FfiType[_], parameterTypes: FfiType
     argsPtr(args.length) = null
     ffi.ffi_call(cif, fn, rvalue, argsPtr)
   }
+
+  def dispose(): Unit =
+    stdlib.free(cif.cast[Ptr[Byte]])
 }

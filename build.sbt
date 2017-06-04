@@ -22,7 +22,7 @@ lazy val `libffi-scala-native-test` = project
     unpublished,
     resolvers += Resolver.bintrayRepo("nadavwr", "maven"),
     libraryDependencies += "com.github.nadavwr" %%% "makeshift" % "0.1.3",
-    test := run.toTask("").value
+    test := (run in Compile).toTask("").value
   )
   .dependsOn(`libffi-scala-native`)
 

@@ -1,14 +1,13 @@
 package com.github.nadavwr.ffi
 
 import scala.scalanative.native._
-import scala.scalanative.runtime.GC
 
 class FfiType[A] private[ffi](val name: String, size: Long,
                               val alignment: Int, val `type`: FFI_TYPE,
                               val elements: FfiType[_]*) {
   private[ffi] val ptr: FfiTypePtr = {
     val elementsPtrSize = (elements.length+1) * sizeof[Ptr[FfiTypeStruct]]
-    val allocated = GC.malloc(sizeof[FfiTypeStruct] + elementsPtrSize)
+    val allocated = stdlib.malloc(sizeof[FfiTypeStruct] + elementsPtrSize)
     val ffiTypePtr = allocated.cast[FfiTypePtr]
     val elementsPtrBytes = allocated + sizeof[FfiTypeStruct]
     string.memset(elementsPtrBytes, 0, elementsPtrSize)
@@ -31,6 +30,9 @@ class FfiType[A] private[ffi](val name: String, size: Long,
     if (!isStruct) name
     else s"$name " + elements.map(_.name).mkString("{ ", ", ", " }")
   }
+
+  def dispose(): Unit =
+    stdlib.free(ptr.cast[Ptr[Byte]])
 }
 
 object FfiType {
