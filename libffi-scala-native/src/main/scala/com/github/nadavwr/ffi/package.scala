@@ -2,8 +2,8 @@ package com.github.nadavwr
 
 import scala.language.implicitConversions
 import scala.scalanative.native._
-import scala.scalanative.runtime.GC
 
+//noinspection ScalaUnusedSymbol
 package object ffi {
 
   private[ffi] type FfiTypeStruct = CStruct4[CSize, UShort, FFI_TYPE, Ptr[Ptr[Byte]]]
@@ -11,7 +11,6 @@ package object ffi {
 
   private[ffi] type FFI_TYPE = UShort
   private[ffi] val FFI_TYPE_VOID       : FFI_TYPE = 0.toUShort
-  //noinspection ScalaUnusedSymbol
   private[ffi] val FFI_TYPE_INT        : FFI_TYPE = 1.toUShort
   private[ffi] val FFI_TYPE_FLOAT      : FFI_TYPE = 2.toUShort
   private[ffi] val FFI_TYPE_DOUBLE     : FFI_TYPE = 3.toUShort
