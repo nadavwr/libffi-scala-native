@@ -19,7 +19,7 @@ this library is published, and add a `%%%` dependency:
 
 ```scala
 resolvers += Resolver.bintrayRepo("nadavwr", "maven"),
-libraryDependencies += "com.github.nadavwr" %%% "libffi-scala-native" % "0.3.3"
+libraryDependencies += "com.github.nadavwr" %%% "libffi-scala-native" % "0.4.0"
 ```
 
 Every parameter type must have an instance of `FfiType[_]`
@@ -75,3 +75,4 @@ provided to bound functions as pointers.
 * There is no facility to unload shared libraries once they've been loaded.
 * Expect a performance drop typical of `libffi`. 
 Depending on your needs, this may be negligible.
+
