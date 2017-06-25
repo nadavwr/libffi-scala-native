@@ -2,11 +2,15 @@ package com.github.nadavwr.ffi
 
 import scala.scalanative.native._
 
+private case class PtrWrapper(ptr: Ptr[Byte])
+
 class Module(private val moduleHandle: Ptr[Byte]) {
   def fn(symbol: String): Ptr[Byte] = {
-    val cstr = toCString(symbol)(Alloc.system)
-    try dl.dlsym(moduleHandle, cstr)
-    finally Alloc.system.free(cstr)
+    val PtrWrapper(ptr) =
+      Zone { implicit zone =>
+        PtrWrapper(dl.dlsym(moduleHandle, toCString(symbol)))
+      }
+    ptr
   }
   def prepare[T1 : FfiType, R : FfiType]
              (symbol: String): CallInterface1[T1, R] = {
@@ -129,14 +133,13 @@ object Module {
   val RTLD_NODELETE = 0x80
 
   def open(path: String = "", mode: CInt = RTLD_LAZY): Module = {
-    val ptr = {
-      val cstr = if (path.isEmpty) null else toCString(path)(Alloc.system)
-      try {
-        dl.dlopen(cstr, mode)
-      } finally {
-        Alloc.system.free(cstr)
+    val PtrWrapper(ptr) =
+      Zone { implicit zone =>
+        val cstr: CString =
+          if (path.nonEmpty) toCString(path)
+          else null
+        PtrWrapper(dl.dlopen(cstr, mode))
       }
-    }
     assert(ptr != null, s"dlopen $path: ${dl.dlerror()}")
     new Module(ptr)
   }
