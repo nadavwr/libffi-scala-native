@@ -23,18 +23,18 @@ dependencies:
     # Install re2
     # (libre2-dev) since Xenial (16.04 LTS) http://packages.ubuntu.com/xenial/libre2-dev
     - sudo apt-get install -y make
-    - git clone https://code.googlesource.com/re2 || true
-    - git checkout 2017-03-01:
+    - test -f /usr/lib/libre2.dylib || git clone https://code.googlesource.com/re2 || true
+    - test -f /usr/lib/libre2.dylib || git checkout 2017-03-01:
         pwd: re2
-    - make -j4 test:
-        pwd: re2
-        environment:
-          CXX: clang++-3.7
-    - sudo make install prefix=/usr:
+    - test -f /usr/lib/libre2.dylib || make -j4 test:
         pwd: re2
         environment:
           CXX: clang++-3.7
-    - make testinstall prefix=/usr:
+    - test -f /usr/lib/libre2.dylib || sudo make install prefix=/usr:
+        pwd: re2
+        environment:
+          CXX: clang++-3.7
+    - test -f /usr/lib/libre2.dylib || make testinstall prefix=/usr:
         pwd: re2
         environment:
           CXX: clang++-3.7
@@ -47,4 +47,7 @@ dependencies:
     - "~/.ivy2"
     - "~/.sbt"
     - "re2"
+test:
+  override:
+    - sbt test
 

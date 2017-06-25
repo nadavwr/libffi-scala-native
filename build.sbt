@@ -31,9 +31,11 @@ lazy val `libffi-scala-native-root` = (project in file("."))
   .settings(
     commonSettings,
     unpublished,
-    test := { (test in `libffi-scala-native-test`).value },
+    test := { (run in (`libffi-scala-native-test`, Compile)).inputTaskValue },
     publish := { (publish in `libffi-scala-native`).value },
     publishLocal := { (publishLocal in `libffi-scala-native`).value },
     clean := { (clean in `libffi-scala-native`).value; (clean in `libffi-scala-native-test`).value }
   )
+
+addCommandAlias("test", "libffi-scala-native-test/run")
 
